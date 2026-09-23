@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BRIDGE Global</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:#f5f3ee;color:#1a1a2e;min-height:100vh}
+:root{
+  --ucf-gold:#E8A020;
+  --ucf-dark:#1a1a2e;
+  --ucf-navy:#0d1b3e;
+  --surface:#ffffff;
+  --surface2:#f5f3ee;
+  --border:#e8e4dc;
+  --text-muted:#666;
+  --urgent:#dc2626;
+  --important:#E8A020;
+  --optional:#6b7280;
+  --radius:12px;
+  --shadow:0 2px 12px rgba(0,0,0,0.08);
+}
+
+/* ===== ONBOARDING ===== */
+.onboard-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;background:linear-gradient(135deg,#fef9f0 0%,#f5f3ee 100%)}
+.onboard-card{background:#fff;border-radius:20px;padding:40px;max-width:480px;width:100%;box-shadow:0 8px 40px rgba(0,0,0,0.1)}
+.logo-circle{width:56px;height:56px;border-radius:50%;background:var(--ucf-gold);display:flex;align-items:center;justify-content:center;margin:0 auto 20px}
+.logo-circle svg{fill:white;width:28px;height:28px}
+.onboard-title{font-family:'DM Serif Display',serif;font-size:28px;text-align:center;color:var(--ucf-dark);margin-bottom:6px}
+.onboard-sub{text-align:center;color:var(--text-muted);font-size:14px;margin-bottom:28px}
+.steps{display:flex;align-items:center;justify-content:center;gap:0;margin-bottom:32px}
+.step-dot{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;flex-shrink:0}
+.step-dot.active{background:var(--ucf-gold);color:white}
+.step-dot.done{background:var(--ucf-gold);color:white}
+.step-dot.inactive{background:#e8e4dc;color:#999}
+.step-line{width:60px;height:2px}
+.step-line.done{background:var(--ucf-gold)}
+.step-line.inactive{background:#e8e4dc}
+.field-label{font-size:15px;font-weight:600;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.field-label svg{opacity:.6;flex-shrink:0}
+.field-group{margin-bottom:20px}
+.field-hint{font-size:12px;color:var(--text-muted);margin-top:6px}
+input[type=text]{width:100%;padding:12px 16px;border:1.5px solid #e0ddd6;border-radius:10px;font-size:15px;font-family:'DM Sans',sans-serif;outline:none;transition:.2s}
+input[type=text]:focus{border-color:var(--ucf-gold)}
+select{width:100%;padding:12px 16px;border:1.5px solid #e0ddd6;border-radius:10px;font-size:15px;font-family:'DM Sans',sans-serif;outline:none;background:#fff;cursor:pointer;transition:.2s;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23666' d='M6 8L1 3h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center}
+select:focus{border-color:var(--ucf-gold)}
+.btn-primary{width:100%;padding:14px;background:var(--ucf-gold);color:white;border:none;border-radius:10px;font-size:16px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:.15s}
+.btn-primary:hover{background:#d4911a}
+.btn-primary:disabled{background:#e8d8b8;cursor:not-allowed}
+.btn-outline{padding:14px 24px;background:transparent;border:1.5px solid #ccc;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:.15s}
+.btn-outline:hover{border-color:var(--ucf-gold);color:var(--ucf-gold)}
+.btn-row{display:flex;gap:12px;margin-top:8px}
+.btn-row .btn-outline{flex:1}
+.btn-row .btn-primary{flex:1.5}
+
+/* ===== DASHBOARD ===== */
+.app-wrap{display:none;flex-direction:column;min-height:100vh;background:#f5f3ee}
+.topbar{background:var(--ucf-navy);padding:14px 24px;display:flex;align-items:center;justify-content:space-between}
+.topbar-brand{display:flex;align-items:center;gap:12px}
+.topbar-logo{width:38px;height:38px;background:var(--ucf-gold);border-radius:10px;display:flex;align-items:center;justify-content:center}
+.topbar-logo svg{fill:white;width:20px;height:20px}
+.topbar-brand-text h1{font-size:15px;font-weight:700;color:white;line-height:1}
+.topbar-brand-text p{font-size:11px;color:#a0a8bf;margin-top:2px}
+.topbar-user{text-align:right}
+.topbar-user span{display:block;font-size:11px;color:#a0a8bf}
+.topbar-user strong{font-size:14px;color:white;font-weight:600}
+
+.dash-inner{max-width:960px;margin:0 auto;padding:24px 20px;width:100%}
+.welcome-banner{background:var(--ucf-gold);border-radius:var(--radius);padding:24px;margin-bottom:20px;display:flex;align-items:center;gap:16px}
+.welcome-banner-icon{font-size:32px;flex-shrink:0}
+.welcome-banner h2{font-size:20px;font-weight:700;color:var(--ucf-dark);margin-bottom:4px}
+.welcome-banner p{font-size:14px;color:rgba(26,26,46,0.75);line-height:1.5}
+.welcome-banner strong{font-weight:700}
+
+.progress-card{background:#e8f8f0;border-radius:var(--radius);padding:24px;margin-bottom:20px;position:relative;overflow:hidden}
+.progress-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:80px;background:linear-gradient(180deg,transparent,#4ade80 200%);opacity:.15}
+.progress-inner{display:flex;align-items:center;gap:20px}
+.progress-ring-wrap{background:white;border-radius:10px;padding:16px 20px;min-width:180px}
+.progress-ring-label{font-size:11px;color:var(--text-muted);margin-bottom:6px}
+.progress-pct{font-size:28px;font-weight:700;color:#16a34a}
+.progress-sub{font-size:12px;color:var(--text-muted);margin-bottom:8px}
+.progress-bar{height:6px;background:#e0e0e0;border-radius:3px;overflow:hidden}
+.progress-fill{height:100%;background:#4ade80;border-radius:3px;transition:width .4s}
+.landscape{flex:1;height:80px;position:relative}
+
+.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.section-header h2{font-size:20px;font-weight:700}
+.find-mentor-btn{background:#3b82f6;color:white;border:none;border-radius:8px;padding:8px 16px;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;display:flex;align-items:center;gap:6px}
+
+.action-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:24px}
+.action-card{background:white;border-radius:var(--radius);padding:18px;border:1.5px solid var(--border);position:relative}
+.action-card.urgent{border-color:#fca5a5;background:#fff5f5}
+.action-card.important-style{border-color:#fde68a;background:#fffbeb}
+.action-card-top{display:flex;align-items:flex-start;gap:12px;margin-bottom:10px}
+.action-icon{width:40px;height:40px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.action-icon.yellow{background:#fef3c7}
+.action-icon.blue{background:#eff6ff}
+.action-icon.gray{background:#f3f4f6}
+.action-icon svg{width:20px;height:20px;opacity:.7}
+.action-info{flex:1}
+.action-title-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:4px}
+.action-info h3{font-size:14px;font-weight:700}
+.badge{font-size:10px;font-weight:700;padding:3px 8px;border-radius:20px;text-transform:uppercase;letter-spacing:.3px}
+.badge.urgent{background:#fee2e2;color:#dc2626}
+.badge.important{background:#fef3c7;color:#b45309}
+.badge.optional{background:#f3f4f6;color:#6b7280}
+.action-desc{font-size:12px;color:var(--text-muted);line-height:1.5;margin-bottom:6px}
+.action-due{font-size:11px;color:var(--text-muted)}
+.action-progress{margin:8px 0}
+.action-progress-bar{height:4px;background:#e5e7eb;border-radius:2px;overflow:hidden;margin-top:4px}
+.action-progress-fill{height:100%;background:#4ade80;border-radius:2px}
+.action-btn{width:100%;padding:10px;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:10px;transition:.15s}
+.action-btn.primary{background:var(--ucf-gold);color:white}
+.action-btn.primary:hover{background:#d4911a}
+.action-btn.danger{background:#dc2626;color:white}
+.action-btn.dark{background:#1a1a2e;color:white}
+.action-btn.dark:hover{background:#2d2d4e}
+
+.tasks-section{margin-bottom:24px}
+.task-counts{display:flex;gap:10px}
+.task-count-badge{font-size:12px;font-weight:600;padding:5px 12px;border-radius:20px}
+.task-count-badge.pending{background:#fef9c3;color:#92400e}
+.task-count-badge.done{background:#dcfce7;color:#166534}
+.task-tabs{display:flex;background:white;border-radius:10px;padding:4px;margin:14px 0;border:1px solid var(--border)}
+.task-tab{flex:1;padding:8px;text-align:center;font-size:13px;font-weight:600;border:none;background:transparent;cursor:pointer;border-radius:7px;transition:.15s;font-family:'DM Sans',sans-serif}
+.task-tab.active{background:#1a1a2e;color:white}
+.task-item{background:white;border-radius:var(--radius);padding:16px 18px;margin-bottom:10px;border:1px solid var(--border)}
+.task-item-top{display:flex;align-items:flex-start;gap:12px}
+.task-check{width:22px;height:22px;border:2px solid #d1d5db;border-radius:50%;flex-shrink:0;margin-top:2px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.15s}
+.task-check.checked{background:#4ade80;border-color:#4ade80}
+.task-check svg{display:none}
+.task-check.checked svg{display:block;fill:white;width:12px;height:12px}
+.task-info{flex:1}
+.task-name{font-size:15px;font-weight:600;margin-bottom:4px}
+.task-name.done-text{text-decoration:line-through;color:var(--text-muted)}
+.task-desc{font-size:13px;color:var(--text-muted);margin-bottom:6px}
+.task-nutrients{font-size:12px;color:#f59e0b;font-weight:500}
+.task-cat-badge{font-size:11px;padding:3px 10px;border-radius:20px;font-weight:500;flex-shrink:0}
+.task-cat-badge.visa{background:#e0e7ff;color:#4338ca}
+.task-cat-badge.housing{background:#f3e8ff;color:#7c3aed}
+.task-cat-badge.financial{background:#dcfce7;color:#166534}
+.task-cat-badge.academic{background:#ffedd5;color:#c2410c}
+.task-cat-badge.health{background:#fce7f3;color:#be185d}
+.task-complete-btn{width:100%;padding:11px;background:#22c55e;color:white;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:12px;transition:.15s}
+.task-complete-btn:hover{background:#16a34a}
+.task-complete-btn.done-btn{background:#e5e7eb;color:#6b7280;cursor:default}
+
+/* ===== MENTOR PAGE ===== */
+.mentor-wrap{display:none;flex-direction:column;min-height:100vh;background:#f5f3ee}
+.mentor-header{background:var(--ucf-dark);padding:20px 24px 28px}
+.back-link{color:var(--ucf-gold);font-size:14px;font-weight:500;cursor:pointer;display:flex;align-items:center;gap:6px;margin-bottom:20px}
+.mentor-header h1{font-size:24px;font-weight:700;color:white}
+.mentor-header p{font-size:14px;color:#a0a8bf;margin-top:4px}
+.mentor-inner{max-width:800px;margin:0 auto;padding:24px 20px;width:100%}
+.mentor-filters{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px}
+.mentor-filter-group label{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:var(--text-muted);display:block;margin-bottom:6px}
+.mentor-count{font-size:14px;color:var(--text-muted);margin-bottom:16px}
+.mentor-count span{color:var(--ucf-gold);font-weight:700}
+.mentor-list{display:flex;flex-direction:column;gap:12px;margin-bottom:28px}
+.mentor-card{background:white;border-radius:var(--radius);padding:18px;border:1px solid var(--border);display:flex;align-items:center;gap:16px}
+.mentor-avatar{width:52px;height:52px;border-radius:50%;background:#3b5bdb;display:flex;align-items:center;justify-content:center;color:white;font-size:14px;font-weight:700;flex-shrink:0}
+.mentor-info{flex:1}
+.mentor-info h3{font-size:16px;font-weight:700;margin-bottom:3px}
+.mentor-major{font-size:13px;color:var(--text-muted)}
+.mentor-tag{font-size:11px;color:var(--text-muted);display:flex;align-items:center;gap:4px;margin-top:4px}
+.chat-btn{background:var(--ucf-dark);color:white;border:none;border-radius:8px;padding:10px 18px;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap;transition:.15s}
+.chat-btn:hover{background:#2d2d4e}
+.mentor-info-box{background:#eff6ff;border-radius:var(--radius);padding:18px}
+.mentor-info-box h3{font-size:14px;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.mentor-info-box p{font-size:13px;color:#374151;line-height:1.6}
+
+.footer{background:var(--ucf-dark);padding:20px 24px;text-align:center}
+.footer p{color:#a0a8bf;font-size:12px;line-height:1.6}
+.footer strong{color:white}
+
+/* notification */
+.notif{position:fixed;bottom:24px;right:24px;background:#22c55e;color:white;padding:12px 20px;border-radius:10px;font-size:14px;font-weight:600;box-shadow:0 4px 20px rgba(0,0,0,0.2);transform:translateY(80px);opacity:0;transition:.3s;z-index:9999}
+.notif.show{transform:translateY(0);opacity:1}
+
+@media(max-width:600px){
+  .action-grid{grid-template-columns:1fr}
+  .mentor-filters{grid-template-columns:1fr}
+  .onboard-card{padding:28px 20px}
+}
+</style>
+</head>
+<body>
+
+<!-- ONBOARDING -->
+<div class="onboard-wrap" id="onboard">
+  <div class="onboard-card">
+    <div class="logo-circle">
+      <svg viewBox="0 0 24 24"><path d="M12 2L4 7l8 5 8-5-8-5zM4 12l8 5 8-5M4 17l8 5 8-5"/></svg>
+    </div>
+    <h1 class="onboard-title">Welcome to BRIDGE Global</h1>
+    <p class="onboard-sub">Let's personalize your UCF journey</p>
+
+    <!-- Step 1 -->
+    <div id="step1">
+      <div class="steps">
+        <div class="step-dot active">1</div>
+        <div class="step-line inactive"></div>
+        <div class="step-dot inactive">2</div>
+        <div class="step-line inactive"></div>
+        <div class="step-dot inactive">3</div>
+      </div>
+      <div class="field-group">
+        <div class="field-label">What's your name?</div>
+        <input type="text" id="userName" placeholder="Enter your full name" />
+      </div>
+      <div class="field-group">
+        <div class="field-label">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          What's your citizenship/visa status?
+        </div>
+        <select id="visaStatus">
+          <option value="us">U.S. Citizen</option>
+          <option value="gc">Green Card Holder (Permanent Resident)</option>
+          <option value="f1" selected>F-1 Student Visa</option>
+          <option value="j1">J-1 Exchange Visitor</option>
+          <option value="other">Other Visa Type</option>
+        </select>
+        <p class="field-hint">This helps us show you relevant scholarship opportunities and resources</p>
+      </div>
+      <button class="btn-primary" onclick="goStep(2)">Next</button>
+    </div>
+
+    <!-- Step 2 -->
+    <div id="step2" style="display:none">
+      <div class="steps">
+        <div class="step-dot done">1</div>
+        <div class="step-line done"></div>
+        <div class="step-dot active">2</div>
+        <div class="step-line inactive"></div>
+        <div class="step-dot inactive">3</div>
+      </div>
+      <div class="field-group">
+        <div class="field-label">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+          What's your major?
+        </div>
+        <select id="userMajor">
+          <option value="">Select your major</option>
+          <option value="Computer Science">Computer Science</option>
+          <option value="Engineering">Engineering</option>
+          <option value="Business Administration">Business Administration</option>
+          <option value="Biology">Biology</option>
+          <option value="Psychology">Psychology</option>
+          <option value="Communication">Communication</option>
+          <option value="Nursing">Nursing</option>
+          <option value="Hospitality Management">Hospitality Management</option>
+          <option value="Criminal Justice">Criminal Justice</option>
+          <option value="Health Sciences">Health Sciences</option>
+          <option value="Aerospace Engineering">Aerospace Engineering</option>
+          <option value="Marine Biology">Marine Biology</option>
+          <option value="Graphic Design">Graphic Design</option>
+          <option value="Political Science">Political Science</option>
+          <option value="Finance">Finance</option>
+          <option value="Forensic Science">Forensic Science</option>
+          <option value="Information Technology">Information Technology</option>
+        </select>
+        <p class="field-hint">We'll filter scholarships, events, and resources specific to your field</p>
+      </div>
+      <div class="btn-row">
+        <button class="btn-outline" onclick="goStep(1)">Back</button>
+        <button class="btn-primary" onclick="goStep(3)">Next</button>
+      </div>
+    </div>
+
+    <!-- Step 3 -->
+    <div id="step3" style="display:none">
+      <div class="steps">
+        <div class="step-dot done">1</div>
+        <div class="step-line done"></div>
+        <div class="step-dot done">2</div>
+        <div class="step-line done"></div>
+        <div class="step-dot active">3</div>
+      </div>
+      <div class="field-group">
+        <div class="field-label">Housing preference?</div>
+        <select id="housingPref">
+          <option value="undecided">Undecided</option>
+          <option value="on-campus">On-Campus</option>
+          <option value="off-campus">Off-Campus</option>
+          <option value="commuting">Commuting</option>
+        </select>
+      </div>
+      <div class="field-group">
+        <div class="field-label">When do you start?</div>
+        <select id="startTerm">
+          <option value="Fall 2026">Fall 2026</option>
+          <option value="Spring 2027">Spring 2027</option>
+          <option value="Summer 2026">Summer 2026</option>
+        </select>
+      </div>
+      <div class="btn-row">
+        <button class="btn-outline" onclick="goStep(2)">Back</button>
+        <button class="btn-primary" onclick="launchDashboard()">Get Started!</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div class="app-wrap" id="dashboard">
+  <div class="topbar">
+    <div class="topbar-brand">
+      <div class="topbar-logo">
+        <svg viewBox="0 0 24 24"><path d="M12 2L4 7l8 5 8-5-8-5zM4 12l8 5 8-5M4 17l8 5 8-5"/></svg>
+      </div>
+      <div class="topbar-brand-text">
+        <h1>BRIDGE Global Dashboard</h1>
+        <p>University of Central Florida</p>
+      </div>
+    </div>
+    <div class="topbar-user">
+      <span>Welcome back,</span>
+      <strong id="topbarName">Student</strong>
+    </div>
+  </div>
+
+  <div class="dash-inner">
+    <div class="welcome-banner">
+      <div class="welcome-banner-icon">🎓</div>
+      <div>
+        <h2>Welcome to Your Bridge! 🌱</h2>
+        <p id="bannerText">Your personalized journey at UCF. Each completed task grows your bridge and celebrates your progress!</p>
+      </div>
+    </div>
+
+    <div class="progress-card">
+      <div class="progress-inner">
+        <div class="progress-ring-wrap">
+          <div class="progress-ring-label">Your Bridge Progress</div>
+          <div class="progress-pct" id="progressPct">0%</div>
+          <div class="progress-sub" id="progressSub">0 of 10 tasks</div>
+          <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+        </div>
+        <div style="flex:1;text-align:center;opacity:.4">
+          <svg width="100" height="60" viewBox="0 0 100 60"><path d="M5 55 Q20 10 50 30 Q70 45 95 5" fill="none" stroke="#4ade80" stroke-width="3" stroke-linecap="round"/><circle cx="50" cy="30" r="5" fill="#4ade80"/></svg>
+          <p style="font-size:11px;color:#166534;margin-top:4px;font-weight:600">Building your bridge to UCF success</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-header">
+      <h2>Personalized Action Items</h2>
+      <button class="find-mentor-btn" onclick="openMentors()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+        Find a Mentor
+      </button>
+    </div>
+
+    <div class="action-grid" id="actionGrid"></div>
+
+    <div class="tasks-section">
+      <div class="section-header">
+        <h2>Your Tasks</h2>
+        <div class="task-counts">
+          <span class="task-count-badge pending" id="pendingCount">10 Pending</span>
+          <span class="task-count-badge done" id="doneCount">0 Completed</span>
+        </div>
+      </div>
+      <div class="task-tabs">
+        <button class="task-tab active" onclick="filterTasks('all',this)">All Tasks</button>
+        <button class="task-tab" onclick="filterTasks('pending',this)">Pending</button>
+        <button class="task-tab" onclick="filterTasks('completed',this)">Completed</button>
+      </div>
+      <div id="taskList"></div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <p><strong>BRIDGE Global Initiative | University of Central Florida</strong><br>
+    Personalized pathways for all UCF students · Eliminating eligibility uncertainty and fragmentation</p>
+  </div>
+</div>
+
+<!-- MENTOR PAGE -->
+<div class="mentor-wrap" id="mentorPage">
+  <div class="topbar" style="background:var(--ucf-dark)">
+    <div class="topbar-brand">
+      <div class="topbar-logo"><svg viewBox="0 0 24 24" fill="white"><path d="M12 2L4 7l8 5 8-5-8-5z"/></svg></div>
+      <div class="topbar-brand-text"><h1 style="color:white">BRIDGE Global</h1></div>
+    </div>
+  </div>
+  <div class="mentor-header">
+    <div class="back-link" onclick="closeMentors()">← Back to Dashboard</div>
+    <h1>Connect with a Peer Mentor</h1>
+    <p>Get advice from international students who have been in your shoes.</p>
+  </div>
+  <div class="mentor-inner">
+    <div class="mentor-filters">
+      <div class="mentor-filter-group">
+        <label>Year Level</label>
+        <select id="mentorYearFilter" onchange="filterMentors()">
+          <option value="">All Years</option>
+          <option value="Sophomore">Sophomore</option>
+          <option value="Junior">Junior</option>
+          <option value="Senior">Senior</option>
+        </select>
+      </div>
+      <div class="mentor-filter-group">
+        <label>Select Your Major</label>
+        <select id="mentorMajorFilter" onchange="filterMentors()">
+          <option value="">All Majors</option>
+          <option value="STEM">STEM / Engineering</option>
+          <option value="Health">Health Sciences</option>
+          <option value="Arts">Arts & Humanities</option>
+          <option value="Business">Business</option>
+          <option value="Sciences">Sciences</option>
+          <option value="Social">Social Sciences</option>
+        </select>
+      </div>
+    </div>
+    <p class="mentor-count">Showing <span id="mentorDisplayCount">12</span> mentors</p>
+    <div class="mentor-list" id="mentorList"></div>
+    <div class="mentor-info-box">
+      <h3>🎓 About Our Peer Mentors</h3>
+      <p>All peer mentors are current UCF international students who have successfully navigated visa requirements, housing, academic success, and cultural adaptation. They volunteer their time to support incoming students through BRIDGE Global.</p>
+    </div>
+  </div>
+  <div class="footer">
+    <p><strong>BRIDGE Global Initiative | University of Central Florida</strong><br>
+    Personalized pathways for all UCF students · Eliminating eligibility uncertainty and fragmentation</p>
+  </div>
+</div>
+
+<div class="notif" id="notif">✓ Task completed! Nutrients added to your bridge!</div>
+
+<script>
+const MENTORS=[
+  {name:'Camila Pizarro',initials:'CP',major:'Health Science',year:'Senior',email:'',cat:'Health'},
+  {name:'Leydi De Los Rios',initials:'LDLR',major:'Information Technology',year:'Junior',email:'',cat:'STEM'},
+  {name:'Daniela Quevedo',initials:'DQ',major:'Forensic Science',year:'Junior',email:'',cat:'Sciences'},
+  {name:'Juan Velez',initials:'JV',major:'Aerospace Engineering',year:'Senior',email:'',cat:'STEM'},
+  {name:'Lucas Daghum',initials:'LD',major:'Computer Science',year:'Junior',email:'',cat:'STEM'},
+  {name:'Tiago Sabbiano',initials:'TS',major:'Computer Science',year:'Senior',email:'',cat:'STEM'},
+  {name:'Ariel Acevedo',initials:'AA',major:'Mechanical Engineering',year:'Junior',email:'',cat:'STEM'},
+  {name:'Kennerly Nichols',initials:'KN',major:'Graphic Design',year:'Sophomore',email:'',cat:'Arts'},
+  {name:'Alessandra Reneli',initials:'AR',major:'Computer Science',year:'Junior',email:'',cat:'STEM'},
+  {name:'Vanessa Rojas',initials:'VR',major:'Political Science',year:'Junior',email:'',cat:'Social'},
+  {name:'Renzo Torrico',initials:'RT',major:'Marine Biology',year:'Senior',email:'',cat:'Sciences'},
+  {name:'Eloisa Blanco',initials:'EB',major:'Finance',year:'Junior',email:'',cat:'Business'},
+];
+
+const INTL_TASKS=[
+  {id:1,name:'Submit I-20 Documents',desc:'Upload your I-20 form and passport to the International Student Portal',cat:'visa',points:20,done:false},
+  {id:2,name:'Complete Visa Interview',desc:'Schedule and attend your F-1 student visa interview at the embassy',cat:'visa',points:25,done:false},
+  {id:3,name:'Register for Housing',desc:'Choose and confirm your on-campus or off-campus housing arrangement',cat:'housing',points:15,done:false},
+  {id:4,name:'Set Up Bank Account',desc:'Open a U.S. bank account for tuition payments and daily expenses',cat:'financial',points:10,done:false},
+  {id:5,name:'Purchase Health Insurance',desc:'Enroll in the UCF international student health insurance plan (GatorCare)',cat:'health',points:15,done:false},
+  {id:6,name:'Complete Orientation',desc:'Attend the mandatory international student orientation session at UCF',cat:'academic',points:20,done:false},
+  {id:7,name:'Register for Classes',desc:'Meet with your academic advisor and register for your first semester courses',cat:'academic',points:20,done:false},
+  {id:8,name:'Get UCF Card',desc:'Visit the UCF Card Services office to get your official Knights ID card',cat:'academic',points:10,done:false},
+  {id:9,name:'Apply for SSN',desc:'Apply for a Social Security Number after receiving work authorization',cat:'visa',points:15,done:false},
+  {id:10,name:'Attend Welcome Event',desc:'Join the Knights Welcome international student event to meet peers and campus resources',cat:'academic',points:10,done:false},
+];
+
+const DOMESTIC_TASKS=[
+  {id:1,name:'Complete FAFSA',desc:'Submit your Free Application for Federal Student Aid at studentaid.gov',cat:'financial',points:25,done:false},
+  {id:2,name:'Verify Bright Futures',desc:'Confirm your Florida Bright Futures scholarship eligibility and enrollment',cat:'financial',points:20,done:false},
+  {id:3,name:'Register for Housing',desc:'Apply for on-campus or off-campus housing through UCF Housing',cat:'housing',points:15,done:false},
+  {id:4,name:'Complete FYE Orientation',desc:'Attend First Year Experience orientation session for new domestic students',cat:'academic',points:20,done:false},
+  {id:5,name:'Access A2O Portal',desc:'Register on UCF\'s Access to Opportunities scholarship portal',cat:'financial',points:15,done:false},
+  {id:6,name:'Set Up Banking',desc:'Open or link a U.S. bank account for tuition payments and expenses',cat:'financial',points:10,done:false},
+  {id:7,name:'Register for Classes',desc:'Meet with your academic advisor and register for your first semester courses',cat:'academic',points:20,done:false},
+  {id:8,name:'Get UCF Card',desc:'Visit UCF Card Services to get your official Knights ID card',cat:'academic',points:10,done:false},
+  {id:9,name:'Purchase Health Insurance',desc:'Enroll in or verify your health insurance plan at UCF',cat:'health',points:15,done:false},
+  {id:10,name:'Attend Welcome Event',desc:'Join Knights Welcome to meet peers and discover campus resources',cat:'academic',points:10,done:false},
+];
+
+const INTL_ACTIONS=[
+  {title:'Form I-20 Next Steps',badge:'urgent',badgeText:'URGENT',desc:'Submit your pathway program documents for visa processing through Global UCF.',due:'Due: Within 30 days of admission',btn:'Complete I-20 Form',btnClass:'danger',progress:0,icon:'doc',url:'https://www.ucf.edu/global/'},
+  {title:'FastWeb Scholarship Database',badge:'important',badgeText:'IMPORTANT',desc:'Search thousands of scholarships matching your profile. Open to all students.',due:'Due: Rolling deadlines year-round',btn:'Search FastWeb',btnClass:'primary',url:'https://www.fastweb.com/'},
+  {title:'Nursing Scholarship Opportunities',badge:'important',badgeText:'IMPORTANT',desc:'Financial aid and scholarship opportunities for international Nursing students.',due:'Due: Application deadline: April 15, 2026',btn:'View UCF Scholarships',btnClass:'primary',url:'https://www.ucf.edu/financial-aid/'},
+  {title:'International Student Scholarships',badge:'important',badgeText:'IMPORTANT',desc:'Specialized scholarships exclusively for F-1 and J-1 visa holders studying in the U.S.',due:'Due: Limited availability - apply early',btn:'View International Aid',btnClass:'primary',url:'https://www.ucf.edu/global/'},
+  {title:'Privately Funded Scholarship Search',badge:'important',badgeText:'IMPORTANT',desc:'Discover private scholarships from corporations, foundations, and community organizations.',due:'Due: Various deadlines throughout the year',btn:'Search Private Scholarships',btnClass:'primary',url:'https://ucf.academicworks.com/'},
+  {title:'Pegasus Path Registration',badge:'important',badgeText:'IMPORTANT',desc:'Plan your academic path and register for courses using the Pegasus Path system.',due:'Due: Priority deadline: May 1, 2026',btn:'Access Pegasus Path',btnClass:'primary',progress:30,url:'https://ucf.academicworks.com/'},
+  {title:'Emergency Circumstances Support',badge:'optional',badgeText:'OPTIONAL',desc:'Access emergency financial support through UCF Student Care Services for urgent needs.',due:'Due: Available year-round',btn:'View Support Options',btnClass:'dark',url:'https://scs.sdes.ucf.edu/'},
+  {title:'UCF Orientation Portal',badge:'optional',badgeText:'OPTIONAL',desc:'Complete your transition checklist and access mandatory orientation sessions.',due:'Due: Before first semester',btn:'Access Orientation',btnClass:'dark',url:'https://orientation.ucf.edu/'},
+  {title:'Student Success Academy',badge:'optional',badgeText:'OPTIONAL',desc:'Access tutoring, writing center, and academic support services through SSA.',due:'Due: Available year-round',btn:'Explore Resources',btnClass:'dark',url:'https://ssa.sdes.ucf.edu/'},
+];
+
+const DOMESTIC_ACTIONS=[
+  {title:'FAFSA Verification',badge:'urgent',badgeText:'URGENT',desc:'Complete or verify your Free Application for Federal Student Aid submission.',due:'Due: Priority deadline - as early as possible',btn:'Complete FAFSA',btnClass:'danger',progress:0,url:'https://www.ucf.edu/financial-aid/apply/'},
+  {title:'UCF A2O Portal',badge:'important',badgeText:'IMPORTANT',desc:'Access UCF\'s primary scholarship portal for domestic students - thousands of opportunities.',due:'Due: Rolling deadlines year-round',btn:'Access A2O',btnClass:'primary',url:'https://ucf.academicworks.com/'},
+  {title:'Bright Futures Tracking',badge:'important',badgeText:'IMPORTANT',desc:'Verify your Florida Bright Futures eligibility and check your scholarship status.',due:'Due: Before enrollment confirmation',btn:'Check Bright Futures',btnClass:'primary',url:'https://www.floridastudentfinancialaidsg.org/'},
+  {title:'Housing Agreement Status',badge:'important',badgeText:'IMPORTANT',desc:'Confirm your on-campus or off-campus housing arrangement and sign agreements.',due:'Due: Housing priority deadline: May 15, 2026',btn:'Manage Housing',btnClass:'primary',progress:30,url:'https://www.housing.ucf.edu/apply/'},
+  {title:'Privately Funded Scholarship Search',badge:'important',badgeText:'IMPORTANT',desc:'Discover private scholarships from corporations, foundations, and community organizations.',due:'Due: Various deadlines throughout the year',btn:'Search Scholarships',btnClass:'primary',url:'https://ucf.academicworks.com/'},
+  {title:'First Year Experience (FYE)',badge:'important',badgeText:'IMPORTANT',desc:'Register for mandatory FYE orientation sessions for new UCF students.',due:'Due: Priority deadline: May 1, 2026',btn:'Access FYE',btnClass:'primary',url:'https://fye.sdes.ucf.edu/orientation/'},
+  {title:'Emergency Circumstances Support',badge:'optional',badgeText:'OPTIONAL',desc:'Access emergency financial support through UCF Student Care Services for urgent needs.',due:'Due: Available year-round',btn:'View Support Options',btnClass:'dark',url:'https://scs.sdes.ucf.edu/'},
+  {title:'Student Success Academy',badge:'optional',badgeText:'OPTIONAL',desc:'Access tutoring, writing center, and academic support services through SSA.',due:'Due: Available year-round',btn:'Explore Resources',btnClass:'dark',url:'https://ssa.sdes.ucf.edu/'},
+  {title:'DirectConnect Advising',badge:'optional',badgeText:'OPTIONAL',desc:'For transfer students - connect with advisors through the DirectConnect to UCF program.',due:'Due: Before first semester',btn:'Transfer Resources',btnClass:'dark',url:'https://directconnect.ucf.edu/'},
+];
+
+let userProfile={};
+let tasks=[];
+let taskFilter='all';
+
+function goStep(n){
+  document.getElementById('step1').style.display=n===1?'block':'none';
+  document.getElementById('step2').style.display=n===2?'block':'none';
+  document.getElementById('step3').style.display=n===3?'block':'none';
+}
+
+function launchDashboard(){
+  const name=document.getElementById('userName').value.trim()||'Student';
+  const visa=document.getElementById('visaStatus').value;
+  const major=document.getElementById('userMajor').value||'Undeclared';
+  const housing=document.getElementById('housingPref').value;
+  const term=document.getElementById('startTerm').value;
+  const isIntl=!['us','gc'].includes(visa);
+  userProfile={name,visa,major,housing,term,isIntl};
+
+  document.getElementById('topbarName').textContent=name;
+  const visaLabel=isIntl?visa.toUpperCase():'U.S. Student';
+  document.getElementById('bannerText').innerHTML=`Your personalized journey as a <strong>${visaLabel}</strong> student studying <strong>${major}</strong>. Each completed task grows your bridge and celebrates your progress to UCF success!`;
+
+  tasks=JSON.parse(JSON.stringify(isIntl?INTL_TASKS:DOMESTIC_TASKS));
+  if(major) tasks[6].desc=`Meet with your ${major} academic advisor and register for your first semester courses`;
+  renderActionGrid(isIntl?INTL_ACTIONS:DOMESTIC_ACTIONS,major);
+  renderTasks();
+  updateProgress();
+  document.getElementById('onboard').style.display='none';
+  document.getElementById('dashboard').style.display='flex';
+}
+
+function renderActionGrid(actions,major){
+  const grid=document.getElementById('actionGrid');
+  let html='';
+  const show=actions.slice(0,8);
+  show.forEach(a=>{
+    const isUrgent=a.badge==='urgent';
+    const cls=isUrgent?'urgent':'important-style';
+    let iconSvg=a.icon==='doc'?'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>':'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>';
+    let progressHtml='';
+    if(a.progress!==undefined){
+      progressHtml=`<div class="action-progress"><div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text-muted)"><span>Progress</span><span>${a.progress}%</span></div><div class="action-progress-bar"><div class="action-progress-fill" style="width:${a.progress}%"></div></div></div>`;
+    }
+    html+=`<div class="action-card ${cls}">
+      <div class="action-card-top">
+        <div class="action-icon yellow">${iconSvg}</div>
+        <div class="action-info">
+          <div class="action-title-row"><h3>${a.title}</h3><span class="badge ${a.badge}">${a.badgeText}</span></div>
+          <p class="action-desc">${a.desc}</p>
+          <p class="action-due">${a.due}</p>
+          ${progressHtml}
+        </div>
+      </div>
+      <button class="action-btn ${a.btnClass}" onclick="window.open('${a.url}','_blank')">${a.btn}</button>
+    </div>`;
+  });
+  grid.innerHTML=html;
+}
+
+function renderTasks(){
+  const list=document.getElementById('taskList');
+  let filtered=tasks;
+  if(taskFilter==='pending') filtered=tasks.filter(t=>!t.done);
+  if(taskFilter==='completed') filtered=tasks.filter(t=>t.done);
+  const catColors={visa:'visa',housing:'housing',financial:'financial',academic:'academic',health:'health'};
+  let html='';
+  filtered.forEach(t=>{
+    const isDone=t.done;
+    html+=`<div class="task-item" id="task${t.id}">
+      <div class="task-item-top">
+        <div class="task-check ${isDone?'checked':''}" onclick="toggleTask(${t.id})">
+          <svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3" stroke-width="2" stroke="white" fill="none"/></svg>
+        </div>
+        <div class="task-info">
+          <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px">
+            <p class="task-name ${isDone?'done-text':''}">${t.name}</p>
+            <span class="task-cat-badge ${catColors[t.cat]||'academic'}">${t.cat.charAt(0).toUpperCase()+t.cat.slice(1)}</span>
+          </div>
+          <p class="task-desc">${t.desc}</p>
+          <p class="task-nutrients">✦ +${t.points} nutrients to your bridge</p>
+        </div>
+      </div>
+      ${!isDone?`<button class="task-complete-btn" onclick="toggleTask(${t.id})">Mark Complete & Add Nutrients</button>`:'<button class="task-complete-btn done-btn" disabled>✓ Completed</button>'}
+    </div>`;
+  });
+  if(filtered.length===0) html=`<div style="text-align:center;padding:40px;color:var(--text-muted);">${taskFilter==='completed'?'No completed tasks yet. Keep going!':'All tasks completed! Great work! 🎉'}</div>`;
+  list.innerHTML=html;
+}
+
+function toggleTask(id){
+  const t=tasks.find(t=>t.id===id);
+  if(!t||t.done) return;
+  t.done=true;
+  renderTasks();
+  updateProgress();
+  showNotif();
+}
+
+function updateProgress(){
+  const done=tasks.filter(t=>t.done).length;
+  const total=tasks.length;
+  const pct=Math.round((done/total)*100);
+  document.getElementById('progressPct').textContent=pct+'%';
+  document.getElementById('progressSub').textContent=done+' of '+total+' tasks';
+  document.getElementById('progressFill').style.width=pct+'%';
+  document.getElementById('pendingCount').textContent=(total-done)+' Pending';
+  document.getElementById('doneCount').textContent=done+' Completed';
+}
+
+function filterTasks(f,btn){
+  taskFilter=f;
+  document.querySelectorAll('.task-tab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderTasks();
+}
+
+function showNotif(){
+  const n=document.getElementById('notif');
+  n.classList.add('show');
+  setTimeout(()=>n.classList.remove('show'),2800);
+}
+
+function openMentors(){
+  document.getElementById('dashboard').style.display='none';
+  const mp=document.getElementById('mentorPage');
+  mp.style.display='flex';
+  mp.style.flexDirection='column';
+  renderMentors(MENTORS);
+  window.scrollTo(0,0);
+}
+
+function closeMentors(){
+  document.getElementById('mentorPage').style.display='none';
+  document.getElementById('dashboard').style.display='flex';
+  window.scrollTo(0,0);
+}
+
+function renderMentors(list){
+  const el=document.getElementById('mentorList');
+  el.innerHTML=list.map(m=>`
+    <div class="mentor-card">
+      <div class="mentor-avatar">${m.initials}</div>
+      <div class="mentor-info">
+        <h3>${m.name}</h3>
+        <p class="mentor-major">${m.major} Student (${m.year})</p>
+        <p class="mentor-tag">✉ UCF International Student</p>
+      </div>
+      <button class="chat-btn" disabled title="Contact details are not shared in this public demo">Chat unavailable in demo</button>
+    </div>`).join('');
+  document.getElementById('mentorDisplayCount').textContent=list.length;
+}
+
+function filterMentors(){
+  const year=document.getElementById('mentorYearFilter').value;
+  const cat=document.getElementById('mentorMajorFilter').value;
+  let filtered=MENTORS;
+  if(year) filtered=filtered.filter(m=>m.year===year);
+  if(cat) filtered=filtered.filter(m=>m.cat===cat);
+  renderMentors(filtered);
+}
+</script>
+</body>
+</html>
